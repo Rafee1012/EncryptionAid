@@ -1,4 +1,7 @@
 import dearpygui.dearpygui as dpg
+import sys
+sys.path.append('/Users/rafeeahsan/EncryptionAid/EncryptionAid')
+from backend.folderManager import make_folder, folders
 
 screen_dim = {
     "width" : 550,
@@ -8,9 +11,10 @@ screen_dim = {
 }
 
 def create_folder():
-    # access terminal and use mkdir folder_name to create folder
-    # add new folder to a list of folders to be accessed by open_folder()
-    print()
+    folder_name = dpg.add_input_text(label="Enter folder name: ", default_value="Enter folder name: ")
+    dpg.add_button(label="Confirm", callback=make_folder(folder_name)) ## ADD BUTTON POSITION
+    folders.append(folder_name)
+
 
 def open_folder():
     # access terminal and use open folder_name to open folder
@@ -27,9 +31,10 @@ def main():
 
     with dpg.window(tag="Primary Window"):
         dpg.add_text("Welcome")
-        dpg.add_button(label="Create Folder", pos=[150, screen_dim["y_pos"]/2])
-        dpg.add_button(label="Access Folder", pos=[300, screen_dim["y_pos"]/2])
-        #dpg.add_input_text(label="string", default_value="Quick brown fox")
+        dpg.add_button(label="Create Folder", pos=[150, screen_dim["y_pos"]/2],
+                       callback=create_folder)
+        dpg.add_button(label="Access Folder", pos=[300, screen_dim["y_pos"]/2],
+                       callback=open_folder)
         #dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
 
     ## Main script must setup gui, show viewport, start gui, and destroy context
