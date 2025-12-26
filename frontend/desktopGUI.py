@@ -1,7 +1,8 @@
 import dearpygui.dearpygui as dpg
+import os
 import sys
 sys.path.append('/Users/rafeeahsan/EncryptionAid/EncryptionAid')
-from backend.folderManager import make_folder, access_folder, folders
+from backend.folderManager import init_app, make_folder, access_folder, folders
 
 screen_dim = {
     "width" : 550,
@@ -9,6 +10,12 @@ screen_dim = {
     "x_pos" : 500,
     "y_pos" : 250
 }
+
+# from https://coderivers.org/blog/check-if-folder-exists-python/
+# checks if root folder of the program is already in Finder, returns boolean
+def hasRootFolder():
+    folder_path = 'Documents/EAroot'
+    return os.path.exists(folder_path)
 
 # adds new window to create folder
 def create_folder():
@@ -55,4 +62,14 @@ def main():
     dpg.destroy_context()
 
 if __name__ == "__main__":
+    if (not hasRootFolder()):
+        init_app()
     main()
+
+'''
+1. Fix init_app (root folder EAroot not creaing in Documents).
+2. Fix folder creation (folders not adding to Finder, only to VSCode space),
+    and folders not creating with proper name.
+3. Ensure all created folders go into EAroot.
+4. Add folder opening with saved names of created folders.
+'''
