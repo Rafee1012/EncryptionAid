@@ -23,7 +23,7 @@ def create_folder():
                     width=screen_dim["width"]/1.5,
                     height=screen_dim["height"]/4.5,
                     pos=[90, 200]):
-        dpg.add_text("Enter folder name:", pos=[20, 30])
+        dpg.add_text("Enter folder name:", pos=[22, 30])
         folder_name = dpg.add_input_text(label="",
                                         pos=[20, 55])
         dpg.add_button(label="Confirm", callback=make_folder(folder_name),
@@ -67,9 +67,8 @@ if __name__ == "__main__":
     main()
 
 '''
-1. Fix init_app (root folder EAroot not creaing in Documents).
-2. Fix folder creation (folders not adding to Finder, only to VSCode space),
-    and folders not creating with proper name.
+1. 'Confirm' button not appearing.
+2. Fix folders not creating with proper name.
 3. Ensure all created folders go into EAroot.
 4. Add folder opening with saved names of created folders.
 '''
