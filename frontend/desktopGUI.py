@@ -2,7 +2,7 @@ import dearpygui.dearpygui as dpg
 import os
 import sys
 sys.path.append('/Users/rafeeahsan/EncryptionAid/EncryptionAid')
-from backend.folderManager import init_app, make_folder, access_folder, folders
+from backend.folderManager import make_folder, access_folder, folders
 
 screen_dim = {
     "width" : 550,
@@ -11,11 +11,8 @@ screen_dim = {
     "y_pos" : 250
 }
 
-# from https://coderivers.org/blog/check-if-folder-exists-python/
-# checks if root folder of the program is already in Finder, returns boolean
-def hasRootFolder():
-    folder_path = 'Documents/EAroot'
-    return os.path.exists(folder_path)
+def get_input():
+    return dpg.get_value("FOLDER_INPUT")
 
 # adds new window to create folder
 def create_folder():
@@ -24,12 +21,12 @@ def create_folder():
                     height=screen_dim["height"]/4.5,
                     pos=[90, 200]):
         dpg.add_text("Enter folder name:", pos=[22, 30])
-        folder_name = dpg.add_input_text(label="",
+        dpg.add_input_text(tag="FOLDER_INPUT", hint="Add name",
+                                        width=250,
                                         pos=[20, 55])
-        dpg.add_button(label="Confirm", callback=make_folder(folder_name),
+        dpg.add_button(label="Confirm", callback=make_folder(get_input()),
                                         pos=[285, 55])
-        folders.append(folder_name)
-
+    
 # opens previously created folder
 def open_folder():
     with dpg.window():
@@ -37,7 +34,7 @@ def open_folder():
     # access terminal and use open folder_name to open folder
     print()
 
-def main():
+def run_app():
     ## Main script must create context and viewport
     dpg.create_context()
     dpg.create_viewport(title='EncryptionAid',
@@ -61,14 +58,19 @@ def main():
     dpg.start_dearpygui()
     dpg.destroy_context()
 
-if __name__ == "__main__":
-    if (not hasRootFolder()):
-        init_app()
-    main()
+
 
 '''
-1. 'Confirm' button not appearing.
+1.
 2. Fix folders not creating with proper name.
 3. Ensure all created folders go into EAroot.
 4. Add folder opening with saved names of created folders.
+'''
+
+'''
+'make_folder' must ensure valid folder name.
+Add 'add file' button.
+Encrypt added files.
+?? Add 'create file' button with document editor.
+Make EAroot invisible
 '''
