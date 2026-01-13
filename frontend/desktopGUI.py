@@ -2,7 +2,7 @@ import dearpygui.dearpygui as dpg
 import os
 import sys
 sys.path.append('/Users/rafeeahsan/EncryptionAid/EncryptionAid')
-from backend.folderManager import make_folder, access_folder, folders
+from backend.folderManager import make_folder, access_item, folders
 
 screen_dim = {
     "width" : 550,
@@ -11,8 +11,8 @@ screen_dim = {
     "y_pos" : 250
 }
 
-def get_input():
-    return dpg.get_value("FOLDER_INPUT")
+def get_input(folder_name):
+    return dpg.get_value(folder_name)
 
 # adds new window to create folder
 def create_folder():
@@ -21,16 +21,21 @@ def create_folder():
                     height=screen_dim["height"]/4.5,
                     pos=[90, 200]):
         dpg.add_text("Enter folder name:", pos=[22, 30])
-        dpg.add_input_text(tag="FOLDER_INPUT", hint="Add name",
+        dpg.add_input_text(tag="FOLDER_INPUT_FOR_CREATE", hint="Add Name",
                                         width=250,
                                         pos=[20, 55])
-        dpg.add_button(label="Confirm", callback=make_folder(get_input()),
+        dpg.add_button(label="Confirm", callback=lambda: make_folder(get_input("FOLDER_INPUT_FOR_CREATE")),
                                         pos=[285, 55])
     
 # opens previously created folder
 def open_folder():
     with dpg.window():
-        dpg.add_button(label="Confirm", callback=access_folder("NAME")) # ALLOW USE TO CHOOSE SPECIFIC FILE FROM THIS PROGRAM, OPEN IT AND REPLACE 'NAME'
+        dpg.add_text("Enter folder name:", pos=[22, 30])
+        dpg.add_input_text(tag="FOLDER_INPUT_FOR_OPEN", hint="Find Folder",
+                                        width=250,
+                                        pos=[20, 55])
+        dpg.add_button(label="Confirm", callback=lambda: access_item(get_input("FOLDER_INPUT_FOR_OPEN")),
+                                        pos=[285, 55])
     # access terminal and use open folder_name to open folder
     print()
 
@@ -58,17 +63,14 @@ def run_app():
     dpg.start_dearpygui()
     dpg.destroy_context()
 
-
-
 '''
 1.
-2. Fix folders not creating with proper name.
-3. Ensure all created folders go into EAroot.
-4. Add folder opening with saved names of created folders.
+2.
+3.
+4.
 '''
 
 '''
-'make_folder' must ensure valid folder name.
 Add 'add file' button.
 Encrypt added files.
 ?? Add 'create file' button with document editor.
