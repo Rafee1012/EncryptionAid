@@ -11,12 +11,15 @@ screen_dim = {
     "y_pos" : 250
 }
 
-def get_input(folder_name):
-    return dpg.get_value(folder_name)
+def get_input(folder_name, tag):
+    captured_item = dpg.get_value(folder_name)
+    dpg.delete_item(tag)
+    return captured_item
 
 # adds new window to create folder
 def create_folder():
-    with dpg.window(label="Create Folder",
+    with dpg.window(tag= "create_subwindow",
+                    label="Create Folder",
                     width=screen_dim["width"]/1.5,
                     height=screen_dim["height"]/4.5,
                     pos=[90, 200]):
@@ -24,17 +27,21 @@ def create_folder():
         dpg.add_input_text(tag="FOLDER_INPUT_FOR_CREATE", hint="Add Name",
                                         width=250,
                                         pos=[20, 55])
-        dpg.add_button(label="Confirm", callback=lambda: make_folder(get_input("FOLDER_INPUT_FOR_CREATE")),
+        dpg.add_button(label="Confirm", callback=lambda: make_folder(get_input("FOLDER_INPUT_FOR_CREATE", "create_subwindow")),
                                         pos=[285, 55])
     
 # opens previously created folder
 def open_folder():
-    with dpg.window():
+    with dpg.window(tag= "open_subwindow",
+                    label="Create Folder",
+                    width=screen_dim["width"]/1.5,
+                    height=screen_dim["height"]/4.5,
+                    pos=[90, 200]):
         dpg.add_text("Enter folder name:", pos=[22, 30])
         dpg.add_input_text(tag="FOLDER_INPUT_FOR_OPEN", hint="Find Folder",
                                         width=250,
                                         pos=[20, 55])
-        dpg.add_button(label="Confirm", callback=lambda: access_item(get_input("FOLDER_INPUT_FOR_OPEN")),
+        dpg.add_button(label="Confirm", callback=lambda: access_item(get_input("FOLDER_INPUT_FOR_OPEN", "open_subwindow")),
                                         pos=[285, 55])
     # access terminal and use open folder_name to open folder
     print()
@@ -68,9 +75,11 @@ def run_app():
 2.
 3.
 4.
+5.
 '''
 
 '''
+Create visual chart of file paths as items are added
 Add 'add file' button.
 Encrypt added files.
 ?? Add 'create file' button with document editor.
