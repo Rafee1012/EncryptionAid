@@ -1,5 +1,4 @@
 import dearpygui.dearpygui as dpg
-import os
 import sys
 sys.path.append('/Users/rafeeahsan/EncryptionAid/EncryptionAid')
 from backend.folderManager import make_folder, access_item, folders
@@ -27,8 +26,9 @@ def create_folder():
         dpg.add_input_text(tag="FOLDER_INPUT_FOR_CREATE", hint="Add Name",
                                         width=250,
                                         pos=[20, 55])
-        dpg.add_button(label="Confirm", callback=lambda: make_folder(get_input("FOLDER_INPUT_FOR_CREATE", "create_subwindow")),
-                                        pos=[285, 55])
+        dpg.add_button(label="Confirm",
+                        callback=lambda: make_folder(get_input("FOLDER_INPUT_FOR_CREATE", "create_subwindow")),
+                        pos=[285, 55])
     
 # opens previously created folder
 def open_folder():
@@ -41,10 +41,9 @@ def open_folder():
         dpg.add_input_text(tag="FOLDER_INPUT_FOR_OPEN", hint="Find Folder",
                                         width=250,
                                         pos=[20, 55])
-        dpg.add_button(label="Confirm", callback=lambda: access_item(get_input("FOLDER_INPUT_FOR_OPEN", "open_subwindow")),
-                                        pos=[285, 55])
-    # access terminal and use open folder_name to open folder
-    print()
+        dpg.add_button(label="Confirm",
+                        callback=lambda: access_item(get_input("FOLDER_INPUT_FOR_OPEN", "open_subwindow")),
+                        pos=[285, 55])
 
 def run_app():
     ## Main script must create context and viewport
